@@ -28,7 +28,7 @@
     </scm>
     <properties>
         <java.version>23</java.version>
-        <packaging>war</packaging> <!-- Add this line to specify the packaging type -->
+        <packaging>war</packaging> <!-- WAR packaging for Spring Boot -->
     </properties>
     <dependencies>
         <dependency>
@@ -50,10 +50,45 @@
 
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Maven WAR Plugin (for packaging WAR files) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <!-- Optional configuration: make sure the spring boot executable JAR is not included in WAR -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!-- Tomcat Plugin for Deployment -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat9-maven-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <!-- Tomcat server details -->
+                    <url>http://your-tomcat-server:8080/manager/html</url>
+                    <server>tomcat</server> <!-- Defined in settings.xml -->
+                    <path>http://localhost:8080/</path>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
+    <servers>
+    <server>
+        <id>tomcat</id> <!-- Must match the server tag in the plugin configuration -->
+        <username>adminuser</username>
+        <password>DDmmss11@@</password>
+    </server>
+</servers>
+
+
 </project>
